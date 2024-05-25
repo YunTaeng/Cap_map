@@ -1,14 +1,10 @@
-
 import React, { useState } from 'react';
-import { useMap } from './MapContext';
-
-const { kakao } = window;
+import axios from 'axios'; // 추가
+import pandas from 'pandas'; // 추가
 
 const scvchanger = () => {
-    const { map, setMap } = useMap();
     const [keyword, setKeyword] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const [markers, setMarkers] = useState([]);
 
     const handleInputChange = (e) => {
         setKeyword(e.target.value);
@@ -19,25 +15,14 @@ const scvchanger = () => {
     };
 
     const keywordSearch = (keyword) => {
-        var places = new kakao.maps.services.Places();
-
-        var searchCallback = function(result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                setSearchResults(result.slice(0, 3)); // 앞에서부터 3개의 결과만 선택
-                setMarkers([]); // 새로운 검색을 위해 기존의 마커 제거
-                result.slice(0, 3).forEach((item) => {
-                    const latlng = new kakao.maps.LatLng(item.y, item.x);
-                    const marker = new kakao.maps.Marker({
-                        name: item.place_name,
-                        position: latlng,
-                        map: map
-                    });
-                    setMarkers((prevMarkers) => [...prevMarkers, marker]);
-                });
-            }
-        };
-
-        places.keywordSearch(keyword, searchCallback);
+        axios.get(`YOUR_BACKEND_URL/search?keyword=${keyword}`) // 수정: 서버에서 검색 결과를 받아옴
+            .then(response => {
+                const result = response.data;
+                setSearchResults(result);
+            })
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+            });
     };
 
     return (
