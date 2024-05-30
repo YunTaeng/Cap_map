@@ -7,16 +7,16 @@ import axios from 'axios';
 import './App.css';
 
 const App = () => {
-    const getCurrentTime = () => {
+    const getCurrentTime = () => { //한국의 현재 시간 받아오기
         const now = new Date();
-        const kstOffset = 9 * 60 * 60 * 1000; // Offset in milliseconds
+        const kstOffset = 9 * 60 * 60 * 1000;
         const kstTime = new Date(now.getTime() + kstOffset);
-        return kstTime.toISOString().substring(11, 16); // Format to HH:mm
+        return kstTime.toISOString().substring(11, 16);
     };
 
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
-    const [departureTime, setDepartureTime] = useState(getCurrentTime); // Get current time at initialization
+    const [departureTime, setDepartureTime] = useState(getCurrentTime);
     const [nodeAddr, setNodeAddr] = useState([]);
     const [eta, setEta] = useState('');
     const [path, setPath] = useState([]);
