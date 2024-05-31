@@ -12,10 +12,9 @@ body {
 }
 
 .LandingPage {
-  width: 100%; /* 너비를 화면 너비에 맞추기 위해 백분율로 설정 */
-  height: 100vh; /* 높이를 화면 높이에 맞추기 위해 뷰포트 높이(100vh)로 설정 */
-  overflow: hidden; /* 수평 스크롤 막기 */
-  background: linear-gradient(180deg, #FFF 0%, #D9FDFF 100%); /* 그라데이션 배경 추가 */
+  width: 100%; 
+  height: 100vh;
+  background: linear-gradient(180deg, #FFF 0%, #D9FDFF 100%);
 }
 
 .Header {
@@ -43,8 +42,7 @@ body {
   top: 11vh;
   left: 10px;
   display: flex;
-  flex-direction: column; /* 수직 방향으로 정렬 */
-  align-items: flex-start; /* 좌측 정렬 */
+  flex-direction: column;
   padding-top: 20px;
   border: 2px solid #422800;
   border-radius: 30px;
@@ -102,16 +100,11 @@ body {
   width: 300px;
   left: 35px;
   z-index: 1; 
-  max-height: 100px; 
+  max-height: 150px; 
   overflow-y: auto; 
   background-color: white;
-}
-.autocompleteItem {
-  width: 100px;
-  padding: 5px;
-  background-color: white;
-  box-shadow: 0 0 0 0.5px gray;
-  margin-bottom: 2px;
+  border-left: 2px solid rgb(0, 0, 0);
+  border-radius: .25rem;
 }
 
 .autocomplete::-webkit-scrollbar {
@@ -126,6 +119,13 @@ body {
   border-radius: 10px;
 }
 
+.autocompleteItem {
+  width: 100px;
+  padding: 5px;
+  background-color: white;
+  box-shadow: 0 0 0 0.5px gray;
+  margin-bottom: 2px;
+}
 .autocomplete .autocompleteItem.active {
   background-color: lightgray;
 }

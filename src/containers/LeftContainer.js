@@ -7,7 +7,7 @@ const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, totalSeco
     const toggleRouteDetail = () => {
         setShowRouteDetail(!showRouteDetail); // Toggle visibility
     };
-
+    
     function convert12H(a) {//HH시 MM분 -> 오전/오후 HH시 MM분
         var time = a;
         var getTime = time.substring(0, 2);
@@ -80,7 +80,7 @@ const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, totalSeco
                     {check_next_day(eta, totalHours, totalMinutes)}
                 </div>
                 
-                <div style={{marginTop: "25px", marginLeft: "-49px"}}>
+                <div style={{marginTop: "25px", marginLeft: "10px"}}>
                     <h4>{convert12H(eta)} 도착</h4>
                 </div>
             </div>
