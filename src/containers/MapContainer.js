@@ -11,7 +11,7 @@ const MapContainer = ({ setMap, nodeAddr }) => {
         if (typeof kakao !== 'undefined') {
             const container = document.getElementById('myMap');
             const options = {
-                center: new kakao.maps.LatLng(36.321655, 127.378953), // 초기 지도 중심 - 대전
+                center: new kakao.maps.LatLng(36.021655, 127.378953), // 초기 지도 중심 - 대전
                 level: 12
             };
             const mapInstance = new kakao.maps.Map(container, options);

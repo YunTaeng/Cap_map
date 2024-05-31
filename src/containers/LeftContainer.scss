@@ -3,13 +3,13 @@
   height: 63vh;
   position: absolute;
   top: 35vh;
-  left: 5px;
+  left: 10px;
   border: 2px solid #422800;
   border-radius: 30px;
 }
 
 .RouteDetailComponent {
-  width: 300px;
+  width: 250px;
   height: 45vh; 
   position: absolute;
   top: 15vh;
@@ -20,6 +20,18 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
+.RouteDetailComponent::-webkit-scrollbar {
+  width: 15px;
+}
+.RouteDetailComponent::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
+.RouteDetailComponent::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
 .ordered-nav {
   position: relative;
   list-style: none;
@@ -28,8 +40,7 @@
   display: block;
 }
 
-.ordered-nav::before {
-  /* Vertical line that connects all of the pages listed in the ordered nav */
+.ordered-nav::before {  /* 원과 원 사이 선 */
   content: '';
   position: absolute;
   z-index: 0;
@@ -38,6 +49,7 @@
   bottom: 16px;
   width: 3px;
   background-color: #27A4FC;
+  z-index: 1;
 }
 
 .ordered-nav--link {
@@ -45,10 +57,10 @@
   margin: 0.75rem 0;
   position: relative;
   border-radius: 10px;
+  
 }
 
-.ordered-nav--link::before {
-  /* 왼쪽의 원*/
+.ordered-nav--link::before {/* 왼쪽의 원*/
   content: '';
   position: absolute;
   top: calc(50% - 7px);
@@ -60,6 +72,7 @@
   border-width: 3px;
   border-style: solid;
   border-radius: 50%;
+  z-index: 1;
 }
 
 .ordered-nav--link:first-child {
@@ -86,19 +99,18 @@
 }
 
 .tx-link {
-  font-family: 'Ubuntu', sans-serif;
   color: #8ebdd1;
-  font-size:24px;
+  font-size:26px;
 }
 
 .ordered-nav--link:hover {
-  background-color: #e3f02a; /* Change background color on hover */
+  background-color: lightgray;
+  width: 70%;
 }
 
 
-
 .button-6 {
-  left: 400px;
+  left: 370px;
   top: 5px;
   align-items: center;
   background-color: #FFFFFF;
@@ -109,7 +121,6 @@
   color: rgba(0, 0, 0, 0.85);
   cursor: pointer;
   display: inline-flex;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 16px;
   font-weight: 600;
   justify-content: center;

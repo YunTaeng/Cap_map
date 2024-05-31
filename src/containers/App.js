@@ -68,7 +68,9 @@ const App = () => {
             }, 3000); // 3초 후 에러메세지 사라짐
         }
     };
-
+    const handleLogoClick = () => {
+        window.location.reload(); // 페이지 새로고침
+    };
     useEffect(() => {
         setStartTime(getCurrentTime());
     }, []);
@@ -76,8 +78,8 @@ const App = () => {
     return (
         <div className="App">
             <div className="LandingPage">
-                <div className="Header">
-                    <img src={logo} alt="로고" className="Logo" />
+            <div className="Header">
+                    <img src={logo} alt="로고" className="Logo" onClick={handleLogoClick}/>
                 </div>
                 <div className="SearchBox">
                     <Autocomplete
