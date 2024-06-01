@@ -22,8 +22,8 @@ async function fetchRouteData(start, end) {
 function createPolyline(map, linePath, options = {}) {
     const defaultOptions = {
         strokeWeight: 5,
-        strokeColor: '#00498c',
-        strokeOpacity: 0.7,
+        strokeColor: '#EE4E4E',
+        strokeOpacity: 1.0,
         strokeStyle: 'solid',
         path: linePath
     };

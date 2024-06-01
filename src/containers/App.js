@@ -6,6 +6,7 @@ import logo from '../images/Logo.png';
 import axios from 'axios';
 import './App.css';
 import './LeftContainer.css'
+const { kakao } = window;
 
 const App = () => {
     const getCurrentTime = () => { //한국의 현재 시간 받아오기
@@ -28,12 +29,43 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showError, setShowError] = useState(false);
     const [mapKey, setMapKey] = useState(0);
+    /*-----------------------------------*/
+    // var places = new kakao.maps.services.Places();
+    //     const nodeName=['장지IC']
+    //     var keywordresult = []; // 결과를 저장할 배열
 
+    //     nodeName.forEach(function(keyword, index) {
+    //         var searchCallback = function(keyword, index) {
+    //             return function(result, status) {
+    //                 if (status === kakao.maps.services.Status.OK) { // 결과를 배열에 추가
+    //                     keywordresult[index] = {
+    //                         name : keyword,
+    //                         lat: result[0].y,
+    //                         lng: result[0].x
+    //                     };
+    //                     keywordresult[index+1] = {
+    //                         name : keyword,
+    //                         lat: result[1].y,
+    //                         lng: result[1].x
+    //                     };
+    //                     keywordresult[index+2] = {
+    //                         name : keyword,
+    //                         lat: result[2].y,
+    //                         lng: result[2].x
+    //                     };
+    //         }
+    //         };
+    //     }(keyword, index);
+    //     places.keywordSearch(keyword, searchCallback);
+    //     });
+    //     console.log(keywordresult)
+/*-----------------------------------*/
     const handleSearch = () => {  
         
+
         if (start_point && end_point&&start_time) {
             /*--------------------------------*/
-            axios.post('http://34.47.71.145:4000/find_path', {start_point, end_point, start_time})
+            axios.post('http://34.47.71.145:5000/find_path', {start_point, end_point, start_time})
             .then(response => {
                 const { path, total_hours, total_minutes, total_seconds,eta } = response.data;
                 setEta(eta);
@@ -41,16 +73,16 @@ const App = () => {
                 setTotalHours(total_hours);
                 setTotalMinutes(total_minutes);
                 setTotalSeconds(total_seconds);
-                return axios.post('http://34.47.71.145:4000/get-node-info', { nodeNames: path })
+                return axios.post('http://34.47.71.145:5000/get-node-info', { nodeNames: path })
             })
             /*--------------------------------*/
-            // const { path, total_hours, total_minutes, total_seconds,eta } = {'path': ['서울특별시청', '한남IC', '잠원IC', '반포IC', '서초IC', '양재IC', '금토JC', '대왕판교IC', '판교JC', '판교IC', '서울TG', '신갈JC', '마성IC', '서용인JC', '용인IC', '양지IC', '덕평IC', '호법JC', '이천IC', '여주JC', '감곡IC', '충주JC', '북충주IC', '중앙탑Hi', '충주IC', '괴산IC', '연풍IC', '문경새재IC', '점촌함창IC', '북상주IC', '상주IC', '낙동JC', '상주JC', '도개IC', '서군위IC', '군위JCT', '동군위IC', '신녕IC', '화산JCT', '동영천IC', '북안IC', '영천JC', '건천IC', '경주IC', '활천IC', '언양JC', '울산JCT', '문수IC', '울주JC', '청량IC', '온양IC', '장안IC', '기장IC', '해운대IC', '동부산IC', '부산광역시청'], 'total_hours': 15, 'total_minutes': 55, 'total_seconds': 0, 'eta': '00시 36분'}
+            // const { path, total_hours, total_minutes, total_seconds,eta } = {'path': ['서울특별시청', '한남IC', '잠원IC', '반포IC', '서초IC', '양재IC', '금토JC', '대왕판교IC', '판교JC', '판교IC', '서울TG', '신갈JC', '마성IC', '서용인JC', '용인IC', '양지IC', '덕평IC', '호법JC', '이천IC', '여주JC', '감곡IC', '충주JC', '북충주IC', '중앙탑Hi', '충주IC', '괴산IC', '연풍IC', '문경새재IC', '점촌함창IC', '북상주IC', '상주IC', '낙동JC', '상주JC', '도개IC', '서군위IC', '군위JCT', '동군위IC', '신녕IC', '화산JCT', '동영천IC', '북안IC', '영천JC', '건천IC', '경주IC', '활천IC', '언양JC', '울산JCT', '문수IC', '울주JC', '청량IC', '온양IC', '장안IC', '기장IC', '해운대IC', '동부산IC', '부산광역시청'], 'total_hours': 0, 'total_minutes': 44, 'total_seconds': 0, 'eta': '16시 44분'}
             // setEta(eta);
             // setPath(path);
             // setTotalHours(total_hours);
             // setTotalMinutes(total_minutes);
             // setTotalSeconds(total_seconds);
-            // axios.post('http://34.47.71.145:4000/get-node-info', { nodeNames: path })
+            // axios.post('http://34.47.71.145:5000/get-node-info', { nodeNames: path })
             /*--------------------------------*/
 
             .then(response => {
@@ -75,7 +107,7 @@ const App = () => {
     useEffect(() => {
         setStartTime(getCurrentTime());
     }, []);
-
+    
     return (
         <div className="App">
             <div className="LandingPage">
@@ -110,8 +142,8 @@ const App = () => {
                     map={map} 
                     eta={eta} 
                     totalHours={totalHours} 
-                    totalMinutes={totalMinutes} 
-                    totalSeconds={totalSeconds} 
+                    totalMinutes={totalMinutes}
+                    start_time={start_time}
                 />
                 <MapContainer key={mapKey} setMap={setMap} nodeAddr={nodeAddr} />
             </div>

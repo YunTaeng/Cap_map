@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import CompareKakao from '../components/compareKakao';
+import MarkerToggle from '../components/MarkerToggle';
 const { kakao } = window;
 
-const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, totalSeconds }) => {
+const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, start_time }) => {
     const [showRouteDetail, setShowRouteDetail] = useState(false); // State to track visibility
 
     const toggleRouteDetail = () => {
         setShowRouteDetail(!showRouteDetail); // Toggle visibility
     };
     
-    function convert12H(a) {//HH시 MM분 -> 오전/오후 HH시 MM분
-        var time = a;
-        var getTime = time.substring(0, 2);
-        var intTime = parseInt(getTime);
-
-        if (intTime < 12 ) {
-            var str = '오전 ';
-        } else {
-            str = '오후 '; 
-        }
-        if (intTime === 12) {var cvHour = intTime;}
-        else {cvHour = intTime%12;}
-
-        var res = str + ('0' + cvHour).slice(-2) +"시"+ time.slice(-4);  
-        return res;
+    function convert12H(a) { //HH시 MM분 -> 오전/오후 HH시 MM분
+        const time = a;
+        const getTime = time.substring(0, 2);
+        const intTime = parseInt(getTime);
+        let str = intTime < 12 ? '오전 ' : '오후 ';
+        const cvHour = intTime === 12 ? intTime : intTime % 12;
+        return str + ('0' + cvHour).slice(-2) + "시" + time.slice(-4);  
     }
 
     function check_next_day(ETA, totalHours, totalMinutes) {
@@ -48,7 +42,6 @@ const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, totalSeco
         }
     }
     
-
     const setCenter = (lat, lng) => {
         if (kakao && map) {
             const moveLatLon = new kakao.maps.LatLng(lat, lng);
@@ -57,12 +50,13 @@ const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, totalSeco
         }
     };
 
+
     // nodeAddr와 eta가 존재할 때만 렌더링
     if (!nodeAddr || !eta) return null;
 
     return (
         <div className="LeftContainer">
-            <div style={{display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div style={{ textAlign: "center" }}>
                     {totalHours > 0 && (
                         <h1 style={{ fontSize: "2em", display: "inline" }}>
@@ -75,20 +69,23 @@ const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, totalSeco
                         </h1>
                     )}
                 </div>
-                <div style={{height: "60px", borderLeft: "2px solid #ccc" ,margin: "0 25px"}}></div>
-                <div style={{ marginTop: "-30px"}}>
+                <div style={{ height: "60px", borderLeft: "2px solid #ccc", margin: "0 25px" }}></div>
+                <div style={{ marginTop: "-30px" }}>
                     {check_next_day(eta, totalHours, totalMinutes)}
                 </div>
                 
-                <div style={{marginTop: "25px", marginLeft: "10px"}}>
+                <div style={{ marginTop: "25px", marginLeft: "10px" }}>
                     <h4>{convert12H(eta)} 도착</h4>
                 </div>
             </div>
 
             <button className="button-6" onClick={toggleRouteDetail}>상세보기</button>
+            <CompareKakao map={map} nodeAddr={nodeAddr} />
+            <MarkerToggle map={map} nodeAddr={nodeAddr} />
             {showRouteDetail && (
                 <div className='RouteDetailComponent'>
                     <h2>경로</h2>
+                    <h3>출발시간 : {start_time}</h3>
                     <ul className="ordered-nav">
                         {nodeAddr.map((node, index) => (
                             <li key={index} className="ordered-nav--link" onClick={() => setCenter(node.lat, node.lng)}>
@@ -96,8 +93,10 @@ const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, totalSeco
                             </li>
                         ))}
                     </ul>
+                    <h3>도착시간 : {eta}</h3>
                 </div>
             )}
+            
         </div>
     );
 };

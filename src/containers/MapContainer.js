@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import drawRoutes from '../components/drawRoutes';
 import makeMarkers from '../components/makeMarkers';
-
 const { kakao } = window;
 
 const MapContainer = ({ setMap, nodeAddr }) => {
@@ -22,7 +21,7 @@ const MapContainer = ({ setMap, nodeAddr }) => {
 
     useEffect(() => {
         if (map && nodeAddr && nodeAddr.length > 0) {
-            makeMarkers(map, nodeAddr);
+            //makeMarkers(map, nodeAddr);
             drawRoutes(map, nodeAddr);
         }
     }, [map, nodeAddr]);
