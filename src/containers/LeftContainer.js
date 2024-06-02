@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import CompareKakao from '../components/compareKakao';
 import MarkerToggle from '../components/MarkerToggle';
 const { kakao } = window;
@@ -80,7 +80,7 @@ const LeftContainer = ({ nodeAddr, map, eta, totalHours, totalMinutes, start_tim
             </div>
 
             <button className="button-6" onClick={toggleRouteDetail}>상세보기</button>
-            <CompareKakao map={map} nodeAddr={nodeAddr} />
+            <CompareKakao map={map} nodeAddr={nodeAddr} start_time={start_time}/>
             <MarkerToggle map={map} nodeAddr={nodeAddr} />
             {showRouteDetail && (
                 <div className='RouteDetailComponent'>

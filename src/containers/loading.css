@@ -1,6 +1,20 @@
 body {
     background: #333333;
 }
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 
 @keyframes rotate-loading {
     0% {
@@ -28,8 +42,17 @@ body {
 
 .loading-container,
 .loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    z-index: 1000; /* Ensure it appears above other elements */
+    opacity: 0;
     height: 100px;
-    position: relative;
     width: 100px;
     border-radius: 100%;
 }

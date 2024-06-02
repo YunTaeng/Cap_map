@@ -6,7 +6,7 @@ import logo from '../images/Logo.png';
 import axios from 'axios';
 import './App.css';
 import './LeftContainer.css'
-const { kakao } = window;
+import './loading.css'
 
 const App = () => {
     const getCurrentTime = () => { //한국의 현재 시간 받아오기
@@ -21,7 +21,6 @@ const App = () => {
     const [start_time, setStartTime] = useState(getCurrentTime());
     const [nodeAddr, setNodeAddr] = useState([]);
     const [eta, setEta] = useState('');
-    const [path, setPath] = useState([]);
     const [totalHours, setTotalHours] = useState(0);
     const [totalMinutes, setTotalMinutes] = useState(0);
     const [totalSeconds, setTotalSeconds] = useState(0);
@@ -32,6 +31,8 @@ const App = () => {
     /*-----------------------------------*/
     // var places = new kakao.maps.services.Places();
     //     const nodeName=['장지IC']
+    
+    // const { kakao } = window;
     //     var keywordresult = []; // 결과를 저장할 배열
 
     //     nodeName.forEach(function(keyword, index) {
@@ -61,18 +62,29 @@ const App = () => {
     //     console.log(keywordresult)
 /*-----------------------------------*/
     const handleSearch = () => {  
-        
+        if (start_point === end_point) {
+            setErrorMessage('출발지와 목적지를 다르게 설정하세요');
+            setShowError(true);
+            setTimeout(() => {
+                setShowError(false);
+            }, 3000); // 3초 후 에러메세지 사라짐
+            return;
+        }
 
         if (start_point && end_point&&start_time) {
             /*--------------------------------*/
+            const reqTime = new Date(); // 시작시각 기록
             axios.post('http://34.47.71.145:5000/find_path', {start_point, end_point, start_time})
             .then(response => {
+                const resTime = new Date(); // 끝시간 기록
+                const timeDiff = resTime - reqTime; //
+                console.log(`경과한 시간: ${timeDiff} ms`);
                 const { path, total_hours, total_minutes, total_seconds,eta } = response.data;
                 setEta(eta);
-                setPath(path);
                 setTotalHours(total_hours);
                 setTotalMinutes(total_minutes);
                 setTotalSeconds(total_seconds);
+
                 return axios.post('http://34.47.71.145:5000/get-node-info', { nodeNames: path })
             })
             /*--------------------------------*/
@@ -134,7 +146,7 @@ const App = () => {
                         value={start_time}
                         onChange={(e) => setStartTime(e.target.value)}
                     />
-                    <button class="button-74" onClick={handleSearch}>검색</button>
+                    <button className="button-74" onClick={handleSearch}>검색</button>
                     {showError && <div className="ErrorMessage">{errorMessage}</div>}
                 </div>
                 <LeftContainer 

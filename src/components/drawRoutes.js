@@ -45,7 +45,7 @@ async function onlyorigindest(map, start, end) {
             return acc;
         }, []);
 
-        createPolyline(map, linePath, { strokeOpacity: 0.6 });
+        createPolyline(map, linePath, { strokeOpacity: 1.0 });
     } catch (error) {
         console.error('Error fetching route data:', error);
     }

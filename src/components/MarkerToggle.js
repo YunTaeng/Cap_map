@@ -72,7 +72,7 @@ function MarkerToggle({ map, nodeAddr }) {
     };
 
     return (
-        <div style={{ position: 'absolute', top: '350px', left: '380px' }}>
+        <div style={{ position: 'absolute', top: '150px', left: '380px' }}>
             <h3>Marker 토글</h3>
             <label className="switch">
                 <input type="checkbox" checked={markersOn} onChange={toggleMarkers} />

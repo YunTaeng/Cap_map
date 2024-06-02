@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const { kakao } = window;
 
-function CompareKakao({ map, nodeAddr }) {
+function CompareKakao({ map, nodeAddr,start_time}) {
     const [pathOn, setPathOn] = useState(false);
     const [polyline, setPolyline] = useState(null);
     const [hours, setHours] = useState(0);
@@ -14,13 +14,17 @@ function CompareKakao({ map, nodeAddr }) {
             Authorization: `KakaoAK ${REST_API_KEY}`,
             'Content-Type': 'application/json'
         };
+        const fixed_date = "20240420";
+        const [hours, minutes] = start_time.split(":");
+        const departure_time = `${fixed_date}${hours}${minutes}`;
         const origin = `${nodeAddr[0].lng},${nodeAddr[0].lat}`;
         const destination = `${nodeAddr[nodeAddr.length - 1].lng},${nodeAddr[nodeAddr.length - 1].lat}`;
-        const url = `https://apis-navi.kakaomobility.com/v1/directions?origin=${origin}&destination=${destination}`;
+        const url = `https://apis-navi.kakaomobility.com/v1/future/directions?departure_time=${departure_time}&origin=${origin}&destination=${destination}`;
+        //const url = `https://apis-navi.kakaomobility.com/v1/directions?origin=${origin}&destination=${destination}`;
         try {
             const response = await fetch(url, { method: 'GET', headers: headers });
             if (!response.ok) {
-                throw new Error(`HTTP 에러!!! Status: ${response.status}`);
+                throw new Error(`HTTP 에러!! Status: ${response.status}`);
             }
             const data = await response.json();
             
@@ -32,6 +36,7 @@ function CompareKakao({ map, nodeAddr }) {
                 });
                 return acc;
             }, []);
+
             const convertTime = (seconds) => {
                 const hours = Math.floor(seconds / 3600);
                 const minutes = Math.floor((seconds % 3600) / 60);
@@ -39,7 +44,7 @@ function CompareKakao({ map, nodeAddr }) {
             };
 
             const durationInSeconds = data.routes[0].summary.duration;
-            const { hours, minutes } = convertTime(durationInSeconds);
+            const { hours, minutes } = convertTime(durationInSeconds);//이곳
 
             const newPolyline = new kakao.maps.Polyline({
                 path: linePath,
@@ -83,7 +88,7 @@ function CompareKakao({ map, nodeAddr }) {
     };
 
     return (
-        <div style={{ position: 'absolute', top: '200px', left: '380px' }}>
+        <div style={{ position: 'absolute', top: '350px', left: '380px' }}>
             <h4>지도API와 비교</h4>
             <label className="switch">
                 <input type="checkbox" checked={pathOn} onChange={togglePath} />
