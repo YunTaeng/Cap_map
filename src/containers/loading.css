@@ -1,93 +1,37 @@
-body {
-    background: #333333;
-}
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+.loading-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #0005;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it appears above other elements */
 }
 
-@keyframes rotate-loading {
-    0% {
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #3498db;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from {
         transform: rotate(0deg);
     }
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }
 
-@keyframes loading-text-opacity {
-    0% {
-        opacity: 0;
-    }
-    20% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-.loading-container,
-.loading {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 0, 0, 0.8);
+.loading-wrap p {
     color: white;
-    padding: 20px;
-    text-align: center;
-    z-index: 1000; /* Ensure it appears above other elements */
-    opacity: 0;
-    height: 100px;
-    width: 100px;
-    border-radius: 100%;
-}
-
-.loading-container {
-    margin: 40px auto;
-}
-
-.loading {
-    border: 2px solid transparent;
-    border-color: transparent #fff transparent #FFF;
-    animation: rotate-loading 1.5s linear 0s infinite normal;
-    transform-origin: 50% 50%;
-}
-
-.loading-container:hover .loading {
-    border-color: transparent #E45635 transparent #E45635;
-}
-
-.loading-container:hover .loading,
-.loading-container .loading {
-    transition: all 0.5s ease-in-out;
-}
-
-#loading-text {
-    animation: loading-text-opacity 2s linear 0s infinite normal;
-    color: #ffffff;
-    font-family: "Helvetica Neue", "Helvetica", "Arial";
-    font-size: 10px;
-    font-weight: bold;
-    margin-top: 45px;
-    opacity: 0;
-    position: absolute;
-    text-align: center;
-    text-transform: uppercase;
-    top: 0;
-    width: 100px;
+    margin-top: 10px;
+    font-size: 50px;
 }

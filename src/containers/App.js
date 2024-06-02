@@ -28,6 +28,7 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showError, setShowError] = useState(false);
     const [mapKey, setMapKey] = useState(0);
+    const [loading, setLoading] = useState(false);
     /*-----------------------------------*/
     // var places = new kakao.maps.services.Places();
     //     const nodeName=['장지IC']
@@ -72,8 +73,9 @@ const App = () => {
         }
 
         if (start_point && end_point&&start_time) {
-            /*--------------------------------*/
+            setLoading(true); // Show loading spinner
             const reqTime = new Date(); // 시작시각 기록
+            /*--------------------------------*/
             axios.post('http://34.47.71.145:5000/find_path', {start_point, end_point, start_time})
             .then(response => {
                 const resTime = new Date(); // 끝시간 기록
@@ -104,6 +106,8 @@ const App = () => {
             .catch(error => {
                 console.error('Error fetching route info:', error);
                 console.log('Loading stopped due to error');
+            }).finally(() => {
+                setLoading(false); // Hide loading spinner
             });
         } else {
             setErrorMessage('전부 입력하고 검색을 눌러주세요');
@@ -122,9 +126,15 @@ const App = () => {
     
     return (
         <div className="App">
+            {loading && (
+            <div className="loading-wrap">
+                <div className="loading-spinner"></div>
+                <p>페이지가 로딩 중입니다...</p>
+            </div>
+            )}
             <div className="LandingPage">
-            <div className="Header">
-                    <img src={logo} alt="로고" className="Logo" onClick={handleLogoClick}/>
+                <div className="Header">
+                        <img src={logo} alt="로고" className="Logo" onClick={handleLogoClick}/>
                 </div>
                 <div className="SearchBox">
                     <Autocomplete
